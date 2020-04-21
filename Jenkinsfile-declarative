@@ -1,0 +1,34 @@
+pipeline{
+    agent {
+        label 'agent1'
+    }
+
+    environment {
+        project = "Test"
+    }
+    stages {
+        stage('build'){
+            steps{
+                sh "sh untilloop.sh"
+            }
+        }
+        stage('Array'){
+            steps{
+                sh "sh array"
+            }
+        }
+    }
+    post {
+        success {
+            echo "Success"
+            sh 'mail -s "Success" lokesh.mydilse@gmail.com'
+        }
+        failure {
+            echo "Failed"
+            sh 'mail -s "Failed" lokesh.mydilse@gmail.com'
+        }
+        always {
+            deleteDir()
+        }
+    }
+}

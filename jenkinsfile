@@ -1,16 +1,19 @@
-node(){
-    stage('checkoout'){
-        checkoout scm
+node('maven'){
+    stage('Checkout'){
+        checkout scm //commenting
     }
-    stage('build'){
+    stage('Printing Parameter'){
+        sh "echo ${environment}"
+    }
+    stage('Build'){
         sh "sh untilloop.sh"
     }
-    stage('array'){
-        sh "sh array"
-        //skr
-
+    if (params.environment == 'Dev'){
+        stage('Array'){
+            sh "sh array"
+        }
     }
-    stage('notify'){
-        sh 'mail -s "the job ran fine" ezoosaleh@gmail.com'
+    stage('Notify'){
+        sh 'mail -s "the job ran fine" lokesh.mydilse@gmail.com'
     }
 }
